@@ -4,10 +4,13 @@ package fr.manooweb.java;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+        static String greeting() {
+        return "Hello Java 21 👋";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(greeting());
     }
 }

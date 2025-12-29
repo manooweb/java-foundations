@@ -8,12 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class AppTest
 {
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    void greeting_shouldMatchExpectedMessage() {
+        assertEquals("Hello Java 21 👋", App.greeting());
+    }
+
+    @Test
+    void greeting_shouldStartWithHello() {
+        assertTrue(App.greeting().startsWith("Hello"));
+    }
+
+    @Test
+    void greeting_shouldMentionJava21() {
+        assertTrue(App.greeting().contains("Java 21"));
     }
 }
