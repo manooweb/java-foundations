@@ -1,7 +1,10 @@
 package fr.manooweb.java.collections;
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SetsExample {
 
@@ -29,5 +32,13 @@ public class SetsExample {
         }
 
         return result;
+    }
+
+    public static Set<String> uniqueCleanNamesWithStreams(Collection<String> rawNames) {
+        return rawNames.stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 }

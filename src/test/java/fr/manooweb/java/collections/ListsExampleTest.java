@@ -23,7 +23,7 @@ class ListsExampleTest {
         List<String> input = new ArrayList<>(
                 List.of("  Alice  ", "", "Bob", "Alice", "   ", "Bob "));
         input.add(null);
-        
+
         List<String> cleaned = ListsExample.cleanNames(input);
 
         assertEquals(List.of("Alice", "Bob", "Alice", "Bob"), cleaned);
@@ -36,5 +36,16 @@ class ListsExampleTest {
         List<String> cleaned = ListsExample.cleanNames(input);
 
         assertTrue(cleaned.isEmpty());
+    }
+
+    @Test
+    void cleanNamesWithStreams_shouldMatchLoopImplementation() {
+        List<String> input = new ArrayList<>(
+                List.of("  Alice  ", "", "Bob", "Alice", "   ", "Bob "));
+        input.add(null);
+
+        assertEquals(
+                ListsExample.cleanNames(input),
+                ListsExample.cleanNamesWithStreams(input));
     }
 }

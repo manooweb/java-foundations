@@ -2,6 +2,7 @@ package fr.manooweb.java.collections;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListsExample {
 
@@ -29,5 +30,13 @@ public class ListsExample {
         }
 
         return result;
+    }
+
+    public static List<String> cleanNamesWithStreams(List<String> rawNames) {
+        return rawNames.stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 }

@@ -2,6 +2,7 @@ package fr.manooweb.java.collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,26 @@ class SetsExampleTest {
         Set<String> result = SetsExample.uniqueCleanNames(input);
 
         // Convert the Set to a List to assert order
+        assertEquals(
+                List.of("Bob", "Alice", "Charlie"),
+                List.copyOf(result));
+    }
+
+    @Test
+    void uniqueCleanNamesWithStreams_shouldMatchLoopImplementation() {
+        var input = Arrays.asList("  Alice  ", "Bob", "Alice", "Bob ", "   ", null);
+
+        assertEquals(
+                SetsExample.uniqueCleanNames(input),
+                SetsExample.uniqueCleanNamesWithStreams(input));
+    }
+
+    @Test
+    void uniqueCleanNamesWithStreams_shouldPreserveInsertionOrder() {
+        var input = List.of("Bob", "Alice", "Bob", "Charlie", "Alice");
+
+        Set<String> result = SetsExample.uniqueCleanNamesWithStreams(input);
+
         assertEquals(
                 List.of("Bob", "Alice", "Charlie"),
                 List.copyOf(result));
