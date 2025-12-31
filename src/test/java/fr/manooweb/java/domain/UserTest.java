@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
 class UserTest {
 
     @Test
@@ -75,5 +77,27 @@ class UserTest {
         assertTrue(result.contains("alice@example.com"));
         assertTrue(result.contains("Alice"));
         assertTrue(result.contains("30"));
+    }
+
+    @Test
+    void findByEmail_shouldReturnUser_whenPresent() {
+        UserRepository repo = new UserRepository();
+        User user = new User("Alice", "alice@example.com", 30);
+
+        repo.save(user);
+
+        Optional<User> result = repo.findByEmail("alice@example.com");
+
+        assertTrue(result.isPresent());
+        assertEquals(user, result.get());
+    }
+
+    @Test
+    void findByEmail_shouldReturnEmptyOptional_whenAbsent() {
+        UserRepository repo = new UserRepository();
+
+        Optional<User> result = repo.findByEmail("missing@example.com");
+
+        assertTrue(result.isEmpty());
     }
 }
