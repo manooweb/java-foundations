@@ -22,4 +22,8 @@ public class AppTest
     void greeting_shouldMentionJava21() {
         assertTrue(App.greeting().contains("Java 21"));
     }
+    @Test
+    void greeting_withName() {
+        assertEquals("Hello Manu 👋", App.greeting("Manu"));
+    }
 }

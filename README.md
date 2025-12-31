@@ -13,10 +13,23 @@ Goal: refresh modern Java fundamentals (language, core APIs, testing) with clean
 mvn test
 ```
 
-## Build
+## Build an executable JAR
 
 ```bash
-mvn package
+mvn clean package
+java -jar target/java-foundations-1.0-SNAPSHOT.jar
+```
+
+### Run in development with Maven Exec Plugin
+
+```bash
+mvn exec:java
+```
+
+### Run with arguments
+
+```bash
+mvn exec:java -Dexec.args="Manu"
 ```
 
 ## Run the application (dev)
