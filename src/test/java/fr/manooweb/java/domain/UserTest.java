@@ -1,10 +1,13 @@
 package fr.manooweb.java.domain;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
 
 class UserTest {
 
@@ -99,5 +102,43 @@ class UserTest {
         Optional<User> result = repo.findByEmail("missing@example.com");
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void recordUser_shouldHaveGeneratedAccessors() {
+        UserRecord user = new UserRecord("Alice", "alice@example.com", 30);
+
+        assertEquals("Alice", user.name());
+        assertEquals("alice@example.com", user.email());
+        assertEquals(30, user.age());
+    }
+
+    @Test
+    void recordUser_shouldHaveValueBasedEquality() {
+        UserRecord u1 = new UserRecord("Alice", "alice@example.com", 30);
+        UserRecord u2 = new UserRecord("Alice", "alice@example.com", 30);
+
+        assertEquals(u1, u2);
+        assertEquals(u1.hashCode(), u2.hashCode());
+    }
+
+    @Test
+    void recordUser_shouldRejectNegativeAge() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new UserRecord("Alice", "alice@example.com", -1));
+    }
+
+    @Test
+    void isAdult_shouldReturnTrue_whenAgeIs18OrMore() {
+        UserRecord user = new UserRecord("Bob", "bob@example.com", 20);
+        assertTrue(user.isAdult());
+    }
+
+    @Test
+    void recordUser_shouldNormalizeEmailAndName() {
+        UserRecord user = new UserRecord(" Alice ", " ALICE@EXAMPLE.COM ", 30);
+
+        assertEquals("Alice", user.name());
+        assertEquals("alice@example.com", user.email());
     }
 }
