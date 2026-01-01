@@ -15,6 +15,14 @@ public class NotificationService {
     }
 
     public void send(String recipient, String message) {
+        if (recipient == null || recipient.trim().isEmpty()) {
+            throw new IllegalArgumentException("Recipient must not be blank");
+        }
+
+        if (message == null || message.trim().isEmpty()) {
+            throw new IllegalArgumentException("Message must not be blank");
+        }
+
         notifier.notify(recipient, message);
     }
 }
