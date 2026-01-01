@@ -1,5 +1,7 @@
 # Java Foundations (JDK 21)
 
+![CI](https://github.com/manooweb/java-foundations/actions/workflows/ci.yml/badge.svg)
+
 Goal: refresh modern Java fundamentals (language, core APIs, testing) with clean and visible GitHub deliverables.
 
 ## Tech stack
