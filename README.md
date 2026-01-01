@@ -1,6 +1,8 @@
 # Java Foundations (JDK 21)
 
 ![CI](https://github.com/manooweb/java-foundations/actions/workflows/ci.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/manooweb/java-foundations/blob/main/LICENSE)
+
 
 Goal: refresh modern Java fundamentals (language, core APIs, testing) with clean and visible GitHub deliverables.
 
