@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class UserTest {
 
@@ -134,11 +136,49 @@ class UserTest {
         assertTrue(user.isAdult());
     }
 
-    @Test
-    void recordUser_shouldNormalizeEmailAndName() {
-        UserRecord user = new UserRecord(" Alice ", " ALICE@EXAMPLE.COM ", 30);
+    @ParameterizedTest
+    @CsvSource({
+            // name, email,             age
+            "'',     alice@example.com, 30",
+            "'   ',  alice@example.com, 30",
+            "Alice,  '',                30",
+            "Alice,  '   ',             30",
+            "Alice,  alice,             30",
+            "Alice,  alice@,            30",
+            "Alice,  @example.com,      30",
+            "Alice,  alice.example.com, 30",
+            "Alice,  alice@example.com, -10"
+    })
+    void constructor_shouldRejectInvalidNameOrEmail(String name, String email, int age) {
+        assertThrows(IllegalArgumentException.class,
+                () -> new UserRecord(name, email, age));
+    }
 
-        assertEquals("Alice", user.name());
-        assertEquals("alice@example.com", user.email());
+    @ParameterizedTest
+    @CsvSource(value = {
+            "NULL,  alice@example.com",
+            "Alice, NULL"
+    }, nullValues = "NULL")
+    void constructor_shouldRejectNullNameOrEmail(String name, String email) {
+        assertThrows(IllegalArgumentException.class,
+                () -> new UserRecord(name, email, 30));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            // rawName,    rawEmail,             expectedName, expectedEmail
+            "' Alice ',   ' ALICE@EXAMPLE.COM ', Alice,        alice@example.com",
+            "'Bob',       'bob@example.com',     Bob,          bob@example.com",
+            "' Manu  ',   ' Manu@Example.Com ',  Manu,         manu@example.com"
+    })
+    void constructor_shouldNormalizeNameAndEmail(
+            String rawName,
+            String rawEmail,
+            String expectedName,
+            String expectedEmail) {
+        UserRecord user = new UserRecord(rawName, rawEmail, 30);
+
+        assertEquals(expectedName, user.name());
+        assertEquals(expectedEmail, user.email());
     }
 }

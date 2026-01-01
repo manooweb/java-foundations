@@ -12,7 +12,9 @@ public record UserRecord(String name, String email, int age) {
         }
 
         String normalizedEmail = email.trim().toLowerCase();
-        if (!normalizedEmail.contains("@")) {
+        int at = normalizedEmail.indexOf('@');
+        
+        if (at <= 0 || at == normalizedEmail.length() - 1) {
             throw new IllegalArgumentException("Email must be valid");
         }
 
